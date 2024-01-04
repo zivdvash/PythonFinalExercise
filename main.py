@@ -2,10 +2,40 @@ import math
 
 
 def factorial(n: float):
-    if (n == 1):
+    if n == 1:
         return 1
 
     return n * factorial(n - 1)
+
+
+def culc_operator(num1: int, num2: int, op: str):
+    if op == '+':
+        return num1 + num2
+    if op == '-':
+        return num1 + num2
+    if op == '*':
+        return num1 * num2
+    if op == '/':
+        return num1 / num2
+    if op == '^':
+        return math.pow(num1, num2)
+    if op == '@':
+        return (num1 + num2)/2
+    if op == '$':
+        if num1 > num2:
+            return num1
+        else:
+            return num2
+    if op == '&':
+        if num1 > num2:
+            return num2
+        else:
+            return num1
+    if op == '%':
+        return num1 % num2
+
+
+
 
 
 
