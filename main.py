@@ -8,7 +8,7 @@ def factorial(n: float):
     return n * factorial(n - 1)
 
 
-def culc_operator(num1: int, num2: int, op: str):
+def culc_tow_operator(num1: int, num2: int, op: str):
     if op == '+':
         return num1 + num2
     if op == '-':
@@ -35,6 +35,11 @@ def culc_operator(num1: int, num2: int, op: str):
         return num1 % num2
 
 
+def culc_one_operator(num1: int,op: str):
+    if op == '~':
+        return -num1
+    if op == '!':
+        return factorial(num1)
 
 
 
