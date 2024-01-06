@@ -15,6 +15,10 @@ def sign_correction(mathexp: str):
     mathexp.replace("--", "+")
 
 
+def get_culc_operator():
+    operations = {"+": 1, "-": 1, "*": 2, "/": 2, "^": 3, "%": 4, "@": 5, "$": 5, "&": 5, "~": 6, "!": 6}
+
+
 def culc_tow_operator(num1: int, num2: int, op: str):
     if op == '+':
         return num1 + num2
