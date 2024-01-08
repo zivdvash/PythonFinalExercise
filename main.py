@@ -17,10 +17,11 @@ def is_op_Unary(op: str):
 
 def sign_correction(mathexp: str):
     while '+-' in mathexp or '-+' in mathexp or '++' in mathexp or '--' in mathexp:
-        mathexp.replace("+-", "-")
-        mathexp.replace("-+", "-")
-        mathexp.replace("++", "+")
-        mathexp.replace("--", "+")
+        mathexp = mathexp.replace("+-", "-")
+        mathexp = mathexp.replace("-+", "-")
+        mathexp = mathexp.replace("++", "+")
+        mathexp = mathexp.replace("--", "+")
+    return mathexp
 
 
 def get_operator_precedence(op: str):
@@ -100,6 +101,7 @@ def culc_one_operator(operators, values):
 
 
 def evaluate_expression(expression):
+    expression = sign_correction(expression)
     tokens = split_math_expression(expression)
     values = []
     operators = []
