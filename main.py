@@ -31,6 +31,14 @@ def get_operator_precedence(op: str):
         return -1
 
 
+def is_float(token):
+    try:
+        float(token)
+        return '.' in token
+    except ValueError:
+        return False
+
+
 def culc_two_operator(operators, values):
     num1 = values.pop()
     num2 = values.pop()
@@ -62,6 +70,26 @@ def culc_two_operator(operators, values):
         return num2 % num1
 
 
+def split_math_expression(expression):
+    tokens = []
+    current_token = ''
+
+    for char in expression:
+        if char.isdigit() or char == '.':
+            current_token += char
+        else:
+            if current_token:
+                tokens.append(current_token)
+                current_token = ''
+            if char.strip():  # Ignore whitespaces
+                tokens.append(char)
+
+    if current_token:
+        tokens.append(current_token)
+
+    return tokens
+
+
 def culc_one_operator(operators, values):
     num1 = values.pop()
     op = operators.pop()
@@ -72,12 +100,12 @@ def culc_one_operator(operators, values):
 
 
 def evaluate_expression(expression):
-    tokens = list(expression)
+    tokens = split_math_expression(expression)
     values = []
     operators = []
 
     for token in tokens:
-        if token.isnumeric():
+        if token.isnumeric() or is_float(token):
             values.append(float(token))
         elif get_operator_precedence(token) != -1:
             while (operators and get_operator_precedence(token) != -1 and
@@ -104,6 +132,8 @@ def evaluate_expression(expression):
 def main():
     print('Enter expression (type "exit" to quit):')
     exp = input()
+    result = split_math_expression(exp)
+    print(result)
     print(evaluate_expression(exp))
 
 
