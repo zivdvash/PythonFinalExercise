@@ -82,7 +82,7 @@ def split_math_expression(expression):
             if current_token:
                 tokens.append(current_token)
                 current_token = ''
-            if char.strip():  # Ignore whitespaces
+            if char.strip():
                 tokens.append(char)
 
     if current_token:
@@ -109,6 +109,16 @@ def evaluate_expression(expression):
     for token in tokens:
         if token.isnumeric() or is_float(token):
             values.append(float(token))
+        elif token == '(':
+            operators.append(token)
+        elif token == ')':
+            while operators[-1] != '(':
+                if is_op_Unary(operators[-1]):
+                    values.append(culc_one_operator(operators, values))
+                else:
+                    values.append(culc_two_operator(operators, values))
+
+            operators.pop()
         elif get_operator_precedence(token) != -1:
             while (operators and get_operator_precedence(token) != -1 and
                    get_operator_precedence(token) <= get_operator_precedence(operators[-1])):
