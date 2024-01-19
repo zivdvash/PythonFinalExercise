@@ -22,13 +22,12 @@ class SumDigitsOperation(UnaryOperation):
         return 6
 
     def perform(self, operand: float) -> float:
-        sumnum = 0
-        while operand % 10 != 0:
-            operand *= 10
-        while operand != 0:
-            sumnum = operand % 10
-
-        return sumnum
+        val = str(operand)
+        val = val.replace('.', '')
+        res = 0
+        for digit in val:
+            res += int(digit)
+        return res
 
 
 class FactorialOperation(RightUnaryOperation):

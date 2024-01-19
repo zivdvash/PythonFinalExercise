@@ -1,13 +1,11 @@
 from operations.operationsFactory import OperationsFactory
 
 
-def signCorrection(mathexp: str):
-    while '+-' in mathexp or '-+' in mathexp or '++' in mathexp or '--' in mathexp:
-        mathexp = mathexp.replace("+-", "-")
-        mathexp = mathexp.replace("-+", "-")
-        mathexp = mathexp.replace("++", "+")
-        mathexp = mathexp.replace("--", "+")
-    return mathexp
+def signCorrection(expression: str):
+    i = 0
+    while '--' in expression:
+        expression = expression.replace("--", "")
+    return expression
 
 
 def splitMathExpression(expression):
@@ -53,7 +51,6 @@ def replaceUnaryMinusesWithUnderscore(expression: str) -> str:
 
 
 def manipulateString(expression: str):
-
     expression = signCorrection(expression)
     expression = replaceUnaryMinusesWithUnderscore(expression)
     tokens = splitMathExpression(expression)

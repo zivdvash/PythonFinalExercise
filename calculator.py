@@ -1,16 +1,18 @@
 from helperFunctions import isFloat
-from operations import operationsFactory
 from operations.operationsFactory import OperationsFactory
 import operations.unaryOperation
 from operations.helpOperation import ParenthesisL
+from stringManipulation import manipulateString
+from validation import validate_exp
 
 
-def evaluate_expression(tokens):
+def evaluate_expression(exp: str):
     # Use the new OperationsFactory
     values = []
     operators = []
     factory_instance = OperationsFactory()
-
+    validate_exp(exp)
+    tokens = manipulateString(exp)
     for token in tokens:
         if token.isnumeric() or isFloat(token):
             values.append(float(token))
@@ -53,4 +55,5 @@ def evaluate_expression(tokens):
             num1 = values.pop()
             values.append(op.perform(num1, num2))
 
-    return values.pop()
+    evaluated_num = values.pop()
+    return round(evaluated_num, 3)

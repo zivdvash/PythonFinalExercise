@@ -39,7 +39,7 @@ class DivisionOperation(BinaryOperation):
         if operand2 != 0:
             return operand1 / operand2
         else:
-            raise ValueError("Cannot divide by zero.")
+            raise ZeroDivisionError("Cannot divide by zero.")
 
 
 class MaximumOperation(BinaryOperation):
