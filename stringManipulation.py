@@ -1,14 +1,36 @@
+"""
+Utility functions for manipulating mathematical expressions.
+
+Includes functions for sign correction, splitting math expressions into tokens, and replacing unary minuses with underscores.
+
+Usage:
+1. Import the required functions from this module.
+2. Use the functions as needed in your program.
+"""
+
 from operations.operationsFactory import OperationsFactory
 
 
-def signCorrection(expression: str):
+def signCorrection(expression: str) -> str:
+    """
+    Corrects consecutive double minuses in the expression.
+
+    :param expression: The mathematical expression to correct.
+    :return: The expression with consecutive double minuses replaced.
+    """
     i = 0
     while '--' in expression:
         expression = expression.replace("--", "")
     return expression
 
 
-def splitMathExpression(expression):
+def splitMathExpression(expression: str) -> list:
+    """
+    Splits a mathematical expression into tokens.
+
+    :param expression: The mathematical expression to split.
+    :return: List of tokens in the expression.
+    """
     tokens = []
     current_token = ''
 
@@ -29,6 +51,12 @@ def splitMathExpression(expression):
 
 
 def replaceUnaryMinusesWithUnderscore(expression: str) -> str:
+    """
+    Replaces unary minuses with underscores in the expression.
+
+    :param expression: The mathematical expression to modify.
+    :return: The expression with unary minuses replaced with underscores.
+    """
     if len(expression) <= 1:
         return expression
 
@@ -37,7 +65,6 @@ def replaceUnaryMinusesWithUnderscore(expression: str) -> str:
 
     i = 0
     while i < len(expression) - 1:
-
         if expression[i] == '-':
             right_neighbor = expression[i + 1]
             left_neighbor = expression[i - 1]
@@ -50,7 +77,14 @@ def replaceUnaryMinusesWithUnderscore(expression: str) -> str:
     return expression
 
 
-def manipulateString(expression: str):
+def manipulateString(expression: str) -> list:
+    """
+    Manipulates a mathematical expression by applying sign correction,
+    splitting into tokens, and replacing unary minuses with underscores.
+
+    :param expression: The mathematical expression to manipulate.
+    :return: List of tokens in the manipulated expression.
+    """
     expression = signCorrection(expression)
     expression = replaceUnaryMinusesWithUnderscore(expression)
     tokens = splitMathExpression(expression)

@@ -7,6 +7,13 @@ from validation import validate_exp
 
 
 def evaluate_expression(exp: str):
+    """
+    Evaluate a mathematical expression and return the result.
+
+    :param exp: The mathematical expression to be evaluated.
+    :return: The result of the evaluation rounded to 3 decimal places.
+    """
+
     values = []
     operators = []
     factory_instance = OperationsFactory()

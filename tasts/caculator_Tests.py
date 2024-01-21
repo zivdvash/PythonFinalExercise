@@ -21,6 +21,9 @@ from calculator import evaluate_expression
     ]
 )
 def test_evaluate_exp(input_n, expected):
+    """
+    Test cases for the evaluate_expression function with valid expressions.
+    """
     assert evaluate_expression(input_n) == expected
 
 
@@ -41,8 +44,11 @@ def test_evaluate_exp(input_n, expected):
     ('--', SyntaxError),
     ('*--5', SyntaxError),
     ('5-#5', SyntaxError)
-
 ])
 def test_invalid_input(input_value, expected_exception):
+    """
+    Test cases for the evaluate_expression function with invalid expressions.
+    """
+
     with pytest.raises(expected_exception):
         evaluate_expression(input_value)

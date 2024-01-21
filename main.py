@@ -3,6 +3,21 @@ from validation import validate_exp
 
 
 def main():
+    """
+    Main function to interactively evaluate mathematical expressions.
+
+    The user can input expressions until typing 'exit'. The program handles various errors, such as
+    ValueError, OverflowError, IndexError, SyntaxError, ZeroDivisionError, and other general exceptions.
+
+    To run the program, execute the script, and input mathematical expressions when prompted.
+
+    Press 'exit' to terminate the program.
+
+    Usage:
+    1. Run the script.
+    2. Input mathematical expressions.
+    3. Type 'exit' to end the program.
+    """
     print('Enter expression (type "exit" to quit):')
     exp = input()
 
