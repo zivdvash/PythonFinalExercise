@@ -43,10 +43,10 @@ class FactorialOperation(RightUnaryOperation):
 
 
 def factorial(n: float):
-    if n == 1:
-        return 1
-
-    return n * factorial(n - 1)
+    result = 1
+    for i in range(1, int(n) + 1):
+        result *= i
+    return result
 
 
 class LeftUnaryOperation(UnaryOperation):

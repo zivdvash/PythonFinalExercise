@@ -97,7 +97,10 @@ class PowerOperation(BinaryOperation):
     """Raise num1 to the power of num2."""
 
     def perform(self, operand1: float, operand2: float) -> float:
-        return pow(operand1, operand2)
+        if operand1 > 0 or not 0 < operand2 < 1:
+            return pow(operand1, operand2)
+        else:
+            raise ValueError("Complex Number ")
 
 
 class SubtractionOperation(BinaryOperation):

@@ -5,12 +5,15 @@ from validation import validate_exp
 def main():
     print('Enter expression (type "exit" to quit):')
     exp = input()
+
     while exp != 'exit':
         try:
             validate_exp(exp)
             print(evaluate_expression(exp))
         except ValueError as e:
             print(f"Value Error: {e}")
+        except OverflowError as e:
+            print(f"Overflow Error: {e}")
         except IndexError as e:
             print(f"IndexError Error: {e}")
         except SyntaxError as e:
@@ -19,12 +22,16 @@ def main():
             print(f"ZeroDivisionError Error: {e}")
         except Exception as e:
             print(f"An error occurred: {e}")
-        except KeyboardInterrupt:
-            print(f"KeyboardInterrupt: Exiting the program")
 
         print('Enter another expression (or "exit" to quit):')
         exp = input()
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except EOFError:
+        print(f"EOF Error")
+
+    except KeyboardInterrupt:
+        print(f"Keyboard Interrupt")

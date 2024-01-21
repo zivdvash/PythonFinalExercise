@@ -39,11 +39,11 @@ def findWrongUnaryLeftPlaceSymbol(expression: str):
     binary_symbols = ['+', '-', '*', '/', '^', '%', '@', '$', '&']
     for i in range(len(exp) - 1):
         if i != 0:
-            if ((exp[i] == '~'
-                 and exp[i + 1] == '_')):
+            if (exp[i] == '~'
+                    and exp[i + 1] == '_' and not exp[i - 1].isnumeric()):
                 i += 1
-            if ((exp[i] == '_'
-                 and exp[i - 1] == '~')):
+            if (exp[i] == '_'
+                    and exp[i - 1] == '~' and exp[i + 1].isnumeric()):
                 i += 1
 
             elif (exp[i] in legit_left_symbols
@@ -76,9 +76,9 @@ def countParenthesis(expression: str):
 def nearParenthesis(expression: str):
     for i in range(len(expression) - 1):
         if i != 0:
-            if expression[i] == '(' and expression[i - 1].isnumeric():
+            if expression[i] == '(' and (expression[i - 1].isnumeric() or expression[i - 1] == ")"):
                 return False
-            elif expression[i] == ')' and expression[i + 1].isnumeric():
+            elif expression[i] == ')' and (expression[i + 1].isnumeric() or expression[i + 1] == '('):
                 return False
     return True
 
@@ -105,24 +105,24 @@ def canNotBeInEdges(expression: str):
 
 def validate_exp(exp: str):
     if len(exp) == 0:
-        raise ValueError(f'exp is empty')
+        raise ValueError(f'exp is empty ')
 
     invalid_chars = findWrongSymbol(exp)
     if len(invalid_chars) != 0:
-        raise ValueError(f'{invalid_chars}  Unacceptable Symbol')
+        raise ValueError(f'{invalid_chars}  Unacceptable Symbol ')
 
     invalid_chars = findWrongUnaryRightPlaceSymbol(exp)
     if len(invalid_chars) != 0:
-        raise SyntaxError(f'{invalid_chars}  Wrong Unary Right Place')
+        raise SyntaxError(f'{invalid_chars}  Wrong Unary Right Place ')
     invalid_chars = findWrongUnaryLeftPlaceSymbol(exp)
     if len(invalid_chars) != 0:
-        raise SyntaxError(f'{invalid_chars}  Wrong Unary Left Place')
+        raise SyntaxError(f'{invalid_chars}  Wrong Unary Left Place ')
 
     if not countParenthesis(exp):
-        raise SyntaxError('parenthesis are not balanced')
+        raise SyntaxError('parenthesis are not balanced ')
 
     if not nearParenthesis(exp):
-        raise SyntaxError('number can not be near parenthesis ')
+        raise SyntaxError('parenthesis are not in place ')
 
     if not emptyParenthesis(exp):
         raise SyntaxError('empty parenthesis ')

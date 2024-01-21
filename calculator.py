@@ -7,7 +7,6 @@ from validation import validate_exp
 
 
 def evaluate_expression(exp: str):
-    # Use the new OperationsFactory
     values = []
     operators = []
     factory_instance = OperationsFactory()
