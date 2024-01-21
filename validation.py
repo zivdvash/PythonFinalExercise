@@ -57,7 +57,7 @@ def findWrongBinaryPlaceSymbol(expression: str) -> list:
     return wrong_symbols
 
 
-def findWrongUnaryRightPlaceSymbol(expression: str) -> list:
+def findWrongUnaryRightPlaceSymbol(expression: str):
     """
     Finds wrong unary right placement symbols in the expression.
 
@@ -67,10 +67,11 @@ def findWrongUnaryRightPlaceSymbol(expression: str) -> list:
     wrong_symbols = []
     legit_right_symbols = ['#', '!']
     binary_symbols = ['+', '-', '*', '/', '^', '%', '@', '$', '&']
-    for i in range(len(expression) - 1):
+    for i in range(len(expression)-1):
         if i != 0:
+
             if (expression[i] in legit_right_symbols
-                    and (not expression[i - 1].isnumeric() and not expression[i + 1] in legit_right_symbols and
+                    and (not expression[i - 1].isnumeric() and not expression[i - 1] in legit_right_symbols and
                          expression[i - 1] != ')')):
                 wrong_symbols.append(expression[i])
 
@@ -197,6 +198,10 @@ def validate_exp(exp: str):
     if len(invalid_chars) != 0:
         raise ValueError(f'{invalid_chars}  Unacceptable Symbol ')
 
+    invalid_chars = canNotBeInEdges(exp)
+    if len(invalid_chars) != 0:
+        raise SyntaxError(f'{invalid_chars}  can not be in edge')
+
     invalid_chars = findWrongUnaryRightPlaceSymbol(exp)
     if len(invalid_chars) != 0:
         raise SyntaxError(f'{invalid_chars}  Wrong Unary Right Place ')
@@ -217,7 +222,3 @@ def validate_exp(exp: str):
 
     if not emptyParenthesis(exp):
         raise SyntaxError('empty parenthesis ')
-
-    invalid_chars = canNotBeInEdges(exp)
-    if len(invalid_chars) != 0:
-        raise SyntaxError(f'{invalid_chars}  can not be in edge')

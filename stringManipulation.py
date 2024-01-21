@@ -19,8 +19,10 @@ def signCorrection(expression: str) -> str:
     :return: The expression with consecutive double minuses replaced.
     """
     i = 0
-    while '--' in expression:
-        expression = expression.replace("--", "")
+    while i < len(expression) - 3:
+        if expression[i] == '-' and expression[i + 1] == '-' and not expression[i + 2].isnumeric():
+            expression = expression.replace("--", "")
+        i += 1
     return expression
 
 

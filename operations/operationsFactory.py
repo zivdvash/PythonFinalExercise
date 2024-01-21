@@ -40,7 +40,6 @@ class OperationsFactory:
 
     def getOperation(self, operator):
         """
-
         :param operator: The operator for which an operation is requested.
         :return: The corresponding operation for the given operator.
         :raises ValueError: If the operator is not recognized.
