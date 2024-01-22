@@ -46,12 +46,12 @@ def findWrongBinaryPlaceSymbol(expression: str) -> list:
     binary_symbols = ['+', '-', '*', '/', '^', '%', '@', '$', '&']
     for i in range(len(exp1) - 1):
         if i != 0:
-            if (exp1[i] in binary_symbols
+            if (exp1[i] in binary_symbols and not exp[i] != '.'
                     and (not exp1[i - 1].isnumeric() and not exp1[i - 1] in legit_right_symbols and
                          exp[i - 1] != ')')):
                 wrong_symbols.append(exp[i])
 
-            elif (exp1[i] in binary_symbols
+            elif (exp1[i] in binary_symbols and not exp[i] != '.'
                   and (not exp1[i + 1].isnumeric() and not exp1[i + 1] in legit_left_symbols and
                        exp1[i + 1] != '(')):
                 wrong_symbols.append(exp[i])
@@ -127,7 +127,7 @@ def findWrongUnaryLeftPlaceSymbol(expression: str) -> list:
                 i += 1
 
             if (exp1[i] in legit_left_symbols
-                    and (not exp1[i - 1] in binary_symbols and exp1[i - 1] != '(')):
+                    and (not exp1[i - 1] in binary_symbols and exp1[i - 1] != '(' and exp1[i - 1] != '~')):
                 wrong_symbols.append(exp[i])
 
             elif (exp1[i] in legit_left_symbols
