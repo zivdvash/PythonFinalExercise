@@ -1,7 +1,8 @@
 from operations.binaryOperation import AdditionOperation, SubtractionOperation, MultiplyOperation, DivisionOperation, \
     PowerOperation, ModuloOperation, AverageOperation, MaximumOperation, MinimumOperation
 from operations.helpOperation import ParenthesisL, ParenthesisR
-from operations.unaryOperation import UnaryMinusOperation, NegativeOperation, FactorialOperation, SumDigitsOperation
+from operations.unaryOperation import UnaryMinusOperation, NegativeOperation, FactorialOperation, SumDigitsOperation, \
+    UnaryMaxMinusOperation
 
 
 class OperationsFactory:
@@ -25,7 +26,7 @@ class OperationsFactory:
                 '*': MultiplyOperation(),
                 '/': DivisionOperation(),
                 '^': PowerOperation(),
-                '_': UnaryMinusOperation(),
+                '_': [UnaryMinusOperation(), UnaryMaxMinusOperation()],
                 '%': ModuloOperation(),
                 '@': AverageOperation(),
                 '$': MaximumOperation(),

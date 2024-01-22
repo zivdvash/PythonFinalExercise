@@ -52,13 +52,14 @@ class SumDigitsOperation(UnaryOperation):
         :param operand: The operand on which the SumDigits unary operation is performed.
         :return: Result of the SumDigits unary operation.
         """
-
-        val = str(operand)
-        val = val.replace('.', '')
-        res = 0
-        for digit in val:
-            res += int(digit)
-        return res
+        if operand < 0:
+            raise SyntaxError("cannot hash to a negative param")
+        if operand == 0:
+            return 1
+        listo = list(str(operand))
+        if 'e' in listo:
+            return sum(float(listo[num]) for num in range(listo.index('e')) if listo[num].isnumeric())
+        return sum(float(num) for num in listo if num.isnumeric())
 
 
 class FactorialOperation(RightUnaryOperation):
@@ -136,6 +137,25 @@ class UnaryMinusOperation(LeftUnaryOperation):
         """
 
         return 3.5
+
+    def perform(self, operand: int) -> int:
+        """
+
+        :param operand: The operand on which the unary minus left unary operation is performed.
+        :return: Result of the unary minus left unary operation.
+        """
+        return -operand
+
+
+class UnaryMaxMinusOperation(LeftUnaryOperation):
+
+    def priority(self) -> float:
+        """
+
+        :return: Priority level of the unary minus left unary operation.
+        """
+
+        return 7
 
     def perform(self, operand: int) -> int:
         """

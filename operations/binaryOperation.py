@@ -179,10 +179,11 @@ class PowerOperation(BinaryOperation):
         :return: The result of raising operand1 to the power of operand2.
         :raises ValueError: If operand1 is less than or equal to 0 and operand2 is a multiple of 10.
         """
-        if operand1 < 0 or operand2 == int(operand2):
-            return pow(operand1, operand2)
-        else:
+        if operand1 < 0 and operand2 != int(operand2):
             raise ValueError("Complex Number ")
+        else:
+            return pow(operand1, operand2)
+
 
 
 class SubtractionOperation(BinaryOperation):

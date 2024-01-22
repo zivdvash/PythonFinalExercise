@@ -19,7 +19,7 @@ def main():
     3. Type 'exit' to end the program.
     """
     print('Enter expression (type "exit" to quit):')
-    exp = input()
+    exp = input().replace(' ', '').replace('\t', '').replace('\r', '')
 
     while exp != 'exit':
         try:
@@ -39,7 +39,7 @@ def main():
             print(f"An error occurred: {e}")
 
         print('Enter another expression (or "exit" to quit):')
-        exp = input()
+        exp = input().replace(' ', '').replace('\t', '').replace('\r', '')
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ Usage:
 2. Use the functions as needed in your program.
 """
 from operations.operationsFactory import OperationsFactory
-from stringManipulation import replaceUnaryMinusesWithUnderscore, signCorrection
+from stringManipulation import replaceUnaryMinusesWithUnderscore, signCorrection, replaceMinusesUnaryWithUnderscore
 
 
 def findWrongSymbol(expression: str) -> list:
@@ -38,21 +38,20 @@ def findWrongBinaryPlaceSymbol(expression: str) -> list:
     :return: List of wrong binary placement symbols found in the expression.
     """
     wrong_symbols = []
-    exp = signCorrection(expression)
-    exp = replaceUnaryMinusesWithUnderscore(exp)
+    exp = replaceMinusesUnaryWithUnderscore(expression)
     legit_right_symbols = ['#', '!']
     legit_left_symbols = ['_', '~']
     binary_symbols = ['+', '-', '*', '/', '^', '%', '@', '$', '&']
-    for i in range(len(exp) - 1):
+    for i in range(len(expression) - 1):
         if i != 0:
-            if (exp[i] in binary_symbols
-                    and (not exp[i - 1].isnumeric() and not exp[i - 1] in legit_right_symbols and
+            if (expression[i] in binary_symbols
+                    and (not expression[i - 1].isnumeric() and not expression[i - 1] in legit_right_symbols and
                          exp[i - 1] != ')')):
                 wrong_symbols.append(exp[i])
 
-            elif (exp[i] in binary_symbols
-                  and (not exp[i + 1].isnumeric() and not exp[i + 1] in legit_left_symbols and
-                       exp[i + 1] != '(')):
+            elif (expression[i] in binary_symbols
+                  and (not expression[i + 1].isnumeric() and not expression[i + 1] in legit_left_symbols and
+                       expression[i + 1] != '(')):
                 wrong_symbols.append(exp[i])
     return wrong_symbols
 
@@ -65,20 +64,21 @@ def findWrongUnaryRightPlaceSymbol(expression: str):
     :return: List of wrong unary right placement symbols found in the expression.
     """
     wrong_symbols = []
+    exp = replaceMinusesUnaryWithUnderscore(expression)
     legit_right_symbols = ['#', '!']
     binary_symbols = ['+', '-', '*', '/', '^', '%', '@', '$', '&']
-    for i in range(len(expression)-1):
+    for i in range(len(expression) - 1):
         if i != 0:
 
             if (expression[i] in legit_right_symbols
                     and (not expression[i - 1].isnumeric() and not expression[i - 1] in legit_right_symbols and
                          expression[i - 1] != ')')):
-                wrong_symbols.append(expression[i])
+                wrong_symbols.append(exp[i])
 
             elif (expression[i] in legit_right_symbols
                   and (not expression[i + 1] in binary_symbols and not expression[i + 1] in legit_right_symbols and
-                       expression[i + 1] != '(')):
-                wrong_symbols.append(expression[i])
+                       expression[i + 1] != ')')):
+                wrong_symbols.append(exp[i])
     return wrong_symbols
 
 
@@ -90,29 +90,27 @@ def findWrongUnaryLeftPlaceSymbol(expression: str) -> list:
     :return: List of wrong unary left placement symbols found in the expression.
     """
     wrong_symbols = []
-    exp = signCorrection(expression)
-    exp = replaceUnaryMinusesWithUnderscore(exp)
+    exp = replaceMinusesUnaryWithUnderscore(expression)
     legit_left_symbols = ['_', '~']
     binary_symbols = ['+', '-', '*', '/', '^', '%', '@', '$', '&']
-    for i in range(len(exp) - 1):
+    for i in range(len(expression) - 1):
         if i != 0:
-            if (exp[i] == '~'
-                    and exp[i + 1] == '_' and not exp[i - 1].isnumeric()):
-                i += 1
-            if (exp[i] == '_'
-                    and exp[i - 1] == '~' and exp[i + 1].isnumeric()):
+            if (expression[i] == '~'
+                    and expression[i + 1] == '_' and not expression[i - 1].isnumeric()):
                 i += 1
 
-            elif (exp[i] in legit_left_symbols
-                  and not exp[i - 1] in binary_symbols and exp[i - 1] != '('):
-                wrong_symbols.append(expression[i])
-            elif (exp[i] == '-'
-                  and exp[i + 1] == '~'):
-                wrong_symbols.append(expression[i])
+            if (expression[i] == '_'
+                    and expression[i - 1] == '~' and expression[i + 1].isnumeric()):
+                i += 1
 
-            elif (exp[i] in legit_left_symbols
-                  and (not exp[i + 1].isnumeric() and exp[i + 1] != '(')):
-                wrong_symbols.append(expression[i])
+            if (expression[i] in legit_left_symbols
+                    and (not expression[i - 1] in binary_symbols and expression[i - 1] != '(' and expression[
+                        i - 1] != '~')):
+                wrong_symbols.append(exp[i])
+
+            elif (expression[i] in legit_left_symbols
+                  and (not expression[i + 1].isnumeric() and expression[i + 1] != '(' and expression[i + 1] != '~')):
+                wrong_symbols.append(exp[i])
 
     return wrong_symbols
 
@@ -191,6 +189,8 @@ def validate_exp(exp: str):
     :raises ValueError: If the expression is empty or contains invalid characters.
     :raises SyntaxError: If there are issues with binary/unary operator placement, parentheses balance, or other syntax errors.
     """
+    expression = signCorrection(exp)
+    expression = replaceUnaryMinusesWithUnderscore(expression)
     if len(exp) == 0:
         raise ValueError(f'exp is empty ')
 
@@ -202,15 +202,15 @@ def validate_exp(exp: str):
     if len(invalid_chars) != 0:
         raise SyntaxError(f'{invalid_chars}  can not be in edge')
 
-    invalid_chars = findWrongUnaryRightPlaceSymbol(exp)
+    invalid_chars = findWrongUnaryRightPlaceSymbol(expression)
     if len(invalid_chars) != 0:
         raise SyntaxError(f'{invalid_chars}  Wrong Unary Right Place ')
 
-    invalid_chars = findWrongBinaryPlaceSymbol(exp)
+    invalid_chars = findWrongBinaryPlaceSymbol(expression)
     if len(invalid_chars) != 0:
         raise SyntaxError(f'{invalid_chars}  Wrong Binary Place ')
 
-    invalid_chars = findWrongUnaryLeftPlaceSymbol(exp)
+    invalid_chars = findWrongUnaryLeftPlaceSymbol(expression)
     if len(invalid_chars) != 0:
         raise SyntaxError(f'{invalid_chars}  Wrong Unary Left Place ')
 
