@@ -24,9 +24,26 @@ def evaluate_expression(exp: str):
                 if isinstance(op, operations.unaryOperation.UnaryOperation):
                     values.append(op.perform(values.pop()))
                 else:
-                    num2 = values.pop()
-                    num1 = values.pop()
-                    values.append(op.perform(num1, num2))
+                    if (operators and op.priority() <= operators[-1].priority() and
+                            isinstance(op, operations.unaryOperation.UnaryOperation)):
+                        op2 = operators.pop()
+                        val = values.pop()
+                        values.append(op2.perform(values.pop()))
+                        values.append(val)
+                        operators.append(op)
+                    else:
+                        if operators and op.priority() <= operators[-1].priority():
+                            op2 = operators.pop()
+                            val = values.pop()
+                            num2 = values.pop()
+                            num1 = values.pop()
+                            values.append(op2.perform(num1, num2))
+                            values.append(val)
+                            operators.append(op)
+                        else:
+                            num2 = values.pop()
+                            num1 = values.pop()
+                            values.append(op.perform(num1, num2))
 
             operators.pop()  # Discard the '('
 
@@ -64,16 +81,26 @@ def evaluate_expression(exp: str):
         if isinstance(op, operations.unaryOperation.UnaryOperation):
             values.append(op.perform(values.pop()))
         else:
-            if operators and op.priority() <= operators[-1].priority():
+            if (operators and op.priority() <= operators[-1].priority() and
+                    isinstance(op, operations.unaryOperation.UnaryOperation)):
                 op2 = operators.pop()
                 val = values.pop()
                 values.append(op2.perform(values.pop()))
                 values.append(val)
                 operators.append(op)
             else:
-                num2 = values.pop()
-                num1 = values.pop()
-                values.append(op.perform(num1, num2))
+                if operators and op.priority() <= operators[-1].priority():
+                    op2 = operators.pop()
+                    val = values.pop()
+                    num2 = values.pop()
+                    num1 = values.pop()
+                    values.append(op2.perform(num1, num2))
+                    values.append(val)
+                    operators.append(op)
+                else:
+                    num2 = values.pop()
+                    num1 = values.pop()
+                    values.append(op.perform(num1, num2))
 
     evaluated_num = values.pop()
     return round(evaluated_num, 3)
