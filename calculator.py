@@ -8,6 +8,13 @@ from validation import validate_exp
 
 
 def evaluate_expression(exp: str):
+    """
+    Evaluate a mathematical expression and return the result.
+
+    :param exp: The mathematical expression to be evaluated.
+    :return: The result of the evaluated expression.
+    :raises ValueError: If the expression is invalid or contains unsupported operators.
+    """
     values = []
     operators = []
     factory_instance = OperationsFactory()
