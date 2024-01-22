@@ -45,6 +45,11 @@ def evaluate_expression(exp: str):
                             num2 = values.pop()
                             num1 = values.pop()
                             values.append(op.perform(num1, num2))
+                        else:
+                            num2 = values.pop()
+                            num1 = values.pop()
+                            values.append(op.perform(num1, num2))
+
             operators.pop()  # Discard the '('
 
         elif token == '_':
