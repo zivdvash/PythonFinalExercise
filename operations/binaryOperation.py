@@ -185,7 +185,6 @@ class PowerOperation(BinaryOperation):
             return pow(operand1, operand2)
 
 
-
 class SubtractionOperation(BinaryOperation):
     def priority(self) -> int:
         """
